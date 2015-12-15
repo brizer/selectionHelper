@@ -1,0 +1,25 @@
+{
+  "manifest_version":2,
+  "name":"SelectionHelper",
+  "description":"Funnyliu first chrome extension. This is helper user to use search engineer more easy",
+  "version":"0.1",
+  "browser_action":{
+	"default_icon":"images/icon.png",
+	"default_popup":"popup.html",
+	"default_title":"my chrome extension"
+  },
+  
+  "content_scripts":[
+    {
+      "matches":["<all_urls>"],
+      "js":["js/content.js"]
+    }
+  ],
+  "permissions":[
+    "tabs","http://*/*","https://*/*"
+  ],
+  "background":{
+    "scripts":["js/background.js"],
+    "persistent":false
+  }
+}

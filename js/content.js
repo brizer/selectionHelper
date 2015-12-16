@@ -3,10 +3,18 @@ body =document.body;
 state = 0;
 x = 0;
 y = 0;
+/**
+ * @description 鼠标抬起事件监听
+ * 1. 获取选中的文本字符串
+ * 2. 判断文本字符串长度和内容
+ * 3. 获取鼠标抬起位置，创建div
+ * 4. 将状态位state置为1，说明div已经出现
+ * @author 刘放 brizer1992@outlook.com
+ * @date 2015/12/15 
+ */
 body.addEventListener("mouseup",function(e){
 	var selected = window.getSelection();
 	var selected_value = selected.toString();
-	console.log(selected_value);
 	if(selected_value!=='' && selected_value.length<=30){
 		var eve = e || window.event;
 		x = eve.clientX;
@@ -19,6 +27,15 @@ body.addEventListener("mouseup",function(e){
 		//
 	}
 },false);
+/**
+ * @description 鼠标点击事件监听
+ * 1. 鼠标点击后首先判断状态位，如果未出现则无反应
+ * 2. 如果div出现，则通过鼠标位置和div宽高决定div点击区域
+ * 3. 如果在点击区域内，则无反应，正常执行
+ * 4. 如果在区域外，则将div隐藏，状态位state置为0
+ * @author 刘放 brizer1992@outlook.com
+ * @date 2015/12/15
+ */
 body.addEventListener("mousedown",function(e){
 	if(state == 1){
 		var xx = e.clientX;
@@ -36,6 +53,12 @@ body.addEventListener("mousedown",function(e){
 },false);
 /**
  * @description 创建div，提供复制和搜索按钮
+ * @remark 暂时暂停复制功能的开发，由于必须要使用到flash
+ * @param text 选中的文本内容
+ * @param left 鼠标点击坐标
+ * @param toop 鼠标点击坐标
+ * @author 刘放 brizer1992@outlook.com
+ * @date 2015/12/16 
  */
 function createDiv(text,left,top){
 	var old = document.getElementById("selectionHelper");
@@ -45,7 +68,7 @@ function createDiv(text,left,top){
 		old.style.display = "block";
 		var a_search = document.getElementById("a_search");
 		a_search.onclick=function(){
-			window.open("http://www.baidu.com/baidu?word="+text,"_blank");	
+			searchClick(text);	
 		};
 	}else{
 		var div = document.createElement("div");
@@ -62,7 +85,7 @@ function createDiv(text,left,top){
 		span_search.appendChild(a_search);
 		span_copy.style.margin = "3px";
 		span_search.style.margin = "3px";
-		div.appendChild(span_copy);
+		//div.appendChild(span_copy);
 		div.appendChild(span_search);
 		div.style.left = left+"px";
 		div.style.top = top+"px";
@@ -74,9 +97,24 @@ function createDiv(text,left,top){
 		div.style.border="1px solid #999";
 		div.style.cursor="pointer";
 		body.appendChild(div);
-		a_search.onclick=function(){
-			window.open("http://www.baidu.com/baidu?word="+text,"_blank");		
+		a_search.onclick = function(){
+			searchClick(text);		
+		};
+		a_copy.onclick = function(e) {
+	        copyToBorad(text);
 		};
 	}
 }
-
+/**
+ * @description event.clipBoardData只有火狐和ie支持，而document.exeCommand("Copy")谷歌从2010年开始就不再支持。剩下的就
+ * 只能用Flash来模拟实现。考虑到Flash的使用率越来越低，所以复制功能暂时暂停。
+ */
+function copyToBorad(text){
+	//window.prompt("请点击ctrl+C来复制", text);
+}
+/**
+ * @description 根据不同的搜索引擎选项，采用不同的搜索引擎。
+ */
+function searchClick(text){
+	window.open("http://www.baidu.com/baidu?word="+text,"_blank");	
+}

@@ -14,7 +14,7 @@ if(localStorage.getItem("index")){
 selection.value = selected;
 selection.addEventListener("change",function(){
     selected = selection.options[selection.selectedIndex].value;
-	localStorage.setItem("index",selected);
+    localStorage.setItem("index",selected);
 	sendMessage(selected);
 },false);
 
@@ -26,7 +26,7 @@ selection.addEventListener("change",function(){
  * @date 
  */
 function sendMessage(){
-	chrome.extension.sendMessage({engineer:"no",selected:selected},function(response){
+	chrome.extension.sendMessage({resource:"popup",selected:selected},function(response){
 	switch (response.whichone){
 		case '0': 
 			search_engineer = 'baidu';

@@ -1,8 +1,36 @@
 console.log("刘放的插件在运转！");
+
 body =document.body;
 state = 0;
 x = 0;
 y = 0;
+//默认搜索引擎为百度
+var search_engineer = 'baidu';
+
+/**
+ * @description 与background进行通讯兵监听返回结果,结果为popup中选中的搜索引擎索引
+ * @author 刘放 brizer1992@outlook.com 
+ * @date 2015/12/17 11:16
+ */
+function chooseEngineer(){
+	chrome.extension.sendMessage({engineer:"hello"},function(response){
+		switch (response.whichone){
+			case '0': 
+				search_engineer = 'baidu';
+				break;
+			case '1':
+				search_engineer = 'bing';
+				break;
+			case '2':
+				search_engineer = 'google';
+				break;
+			default:
+				search_engineer = 'baidu';	
+		}
+		//console.log(search_engineer);
+	});
+	return search_engineer;
+}
 /**
  * @description 鼠标抬起事件监听
  * 1. 获取选中的文本字符串
@@ -116,5 +144,16 @@ function copyToBorad(text){
  * @description 根据不同的搜索引擎选项，采用不同的搜索引擎。
  */
 function searchClick(text){
-	window.open("http://www.baidu.com/baidu?word="+text,"_blank");	
+	var engineer = chooseEngineer();
+	switch (engineer){
+		case 'baidu':
+			window.open("http://www.baidu.com/baidu?word="+text,"_blank");	
+			break;
+		case 'bing':
+			window.open("http://cn.bing.com/search?q="+text,"_blank");
+			break;
+		case 'google':
+			break;
+	};
+	
 }

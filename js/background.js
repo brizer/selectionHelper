@@ -1,6 +1,16 @@
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-	window.open("http://www.baidu.com/baidu?word="+"helloworld","_blank");
+//选中的搜索引擎
+var whichoneSearch = '0';
+/**
+ * @description 监听来自content.js的消息
+ */
+chrome.extension.onMessage.addListener(function(request,sender,sendResponse){
+	if(request.engineer == "hello"){
+		whichoneSearch = localStorage.getItem("index");
+		sendResponse({whichone:whichoneSearch});
+	}else if(request.engineer == "no"){
+		sendResponse({whichone:request.selected});
+		localStorage.setItem("index",request.selected);
+	}
 });
 
 function test(){
@@ -13,3 +23,4 @@ function test(){
 	localStorage.setItem("userSelection","123");
 	
 }
+

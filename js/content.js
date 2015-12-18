@@ -48,6 +48,7 @@ function createDiv(text,left,top){
 		a_copy.innerHTML = "复制 |";
 		a_search.innerHTML = "搜索";
 		a_search.id = "a_search";
+		a_search.style.color = "gray";
 		type = "baidu";
 		span_copy.appendChild(a_copy);
 		span_search.appendChild(a_search);
@@ -55,15 +56,18 @@ function createDiv(text,left,top){
 		span_search.style.margin = "3px";
 		//div.appendChild(span_copy);
 		div.appendChild(span_search);
-		div.style.left = left+"px";
-		div.style.top = top+"px";
-		div.style.position="absolute";
-		div.style.fontSize = "10px";
-		div.style.lineHeight = "1.5";
-		div.style.padding = "3px";
-		div.style.backgroundColor="#fff";
-		div.style.border="1px solid #999";
-		div.style.cursor="pointer";
+		// div.style.left = left+"px";
+		// div.style.top = top+"px";
+		// div.style.position="absolute";
+		// div.style.fontSize = "10px";
+		// div.style.lineHeight = "1.5";
+		// div.style.padding = "3px";
+		// div.style.backgroundColor="#fff";
+		// div.style.border="1px solid #999";
+		// div.style.cursor="pointer";
+		// div.style.zIndex="999";
+		//优化性能
+		div.style.cssText="left: "+left+"px; "+"top: "+top+"px; "+"position: absolute; font-size: 10px; line-height: 1.5; padding: 3px; border: 1px solid rgb(153, 153, 153); cursor: pointer; display: block; z-index: 999; background-color: rgb(255, 255, 255);";
 		body.appendChild(div);
 		a_search.onclick = function(){
 			chooseEngineer(text);		
@@ -96,6 +100,7 @@ function openSearch(search_engineer,text){
 			window.open("http://cn.bing.com/search?q="+text,"_blank");
 			break;
 		case '2':
+			window.open("https://www.google.com.hk/?q=hello#safe=strict&q="+text,"_blank");
 			break;
 	};
 }
